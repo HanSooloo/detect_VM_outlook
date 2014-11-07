@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Assumes 'lsof' is setuid.  May be bad assumption for OSX upgrades.
+CMD=$( lsof -c vmware-vm | grep -v grep | grep '\.pst' | wc -l )
+
+# set -x
+# echo $CMD
+
+if [ "$CMD" -gt "0" ]
+then
+	echo "Open .pst files.  No backup."
+	exit 1
+else
+	echo "No open .pst files.  OK to backup."
+	exit 0
+fi
+
